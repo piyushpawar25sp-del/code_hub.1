@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2.4 E-R Model — DBMS Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600;7..72,700&family=Caveat:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F2F0EA; --paper-line:#D8D2C1;
+    --ink:#20262E; --ink-soft:#4B5560;
+    --margin:#B0432E;
+    --accent:#6B4C93; --accent-soft:#E9E1F3;
+    --gold:#A9791F; --teal:#1F6F5C; --teal-soft:#DCEAE5;
+    --card:#FAF9F4;
+    --serif:'Literata', Georgia, 'Times New Roman', serif;
+    --hand:'Caveat', cursive; --mono:'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:var(--serif); color:var(--ink);
+    background:repeating-linear-gradient(var(--paper) 0px, var(--paper) 35px, var(--paper-line) 36px, var(--paper) 37px);
+    line-height:1.65; -webkit-font-smoothing:antialiased;
+  }
+  .page{max-width:790px; margin:0 auto; padding:56px 48px 96px 76px; position:relative; min-height:100vh;}
+  .page::before{content:""; position:absolute; top:0; bottom:0; left:52px; width:2px; background:var(--margin); opacity:0.55;}
+  header.top{margin-bottom:44px;}
+  .unit-tag{display:inline-block; font-family:var(--mono); font-size:12px; letter-spacing:0.06em; color:var(--accent); background:var(--accent-soft); padding:4px 10px; border-radius:3px; margin-bottom:14px;}
+  h1{font-size:2.35rem; font-weight:700; margin:0 0 8px 0; line-height:1.15;}
+  .subtitle{font-family:var(--hand); font-size:1.4rem; color:var(--ink-soft); margin:0;}
+  h2{font-size:1.5rem; font-weight:600; color:var(--accent); margin:52px 0 6px 0; padding-bottom:8px; border-bottom:1px solid #CEC7B4; display:flex; align-items:baseline; gap:10px;}
+  h2 .no{font-family:var(--mono); font-size:0.85rem; color:var(--gold); font-weight:500;}
+  h3{font-size:1.12rem; font-weight:600; margin:26px 0 8px 0;}
+  p{margin:0 0 14px 0; font-size:1.02rem;}
+  ul, ol{margin:0 0 16px 0; padding-left:22px;}
+  li{margin-bottom:7px; font-size:1.02rem;}
+  .callout{background:var(--card); border-left:3px solid var(--accent); padding:14px 18px; border-radius:2px; margin:16px 0 22px 0; font-size:0.98rem; color:var(--ink-soft);}
+  .callout strong{color:var(--ink);}
+  .definition{background:var(--card); border:1px solid #DCD5BE; border-radius:6px; padding:16px 20px; margin:14px 0 22px 0;}
+  .definition .label{font-family:var(--mono); font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold); margin-bottom:6px; display:block;}
+  table{width:100%; border-collapse:collapse; margin:14px 0 22px 0; font-size:0.95rem; background:var(--card);}
+  th, td{border:1px solid #DCD5BE; padding:9px 12px; text-align:left; vertical-align:top;}
+  th{background:var(--accent-soft); color:var(--accent); font-weight:600; font-size:0.85rem;}
+  .two-col{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:22px;}
+  .card{background:var(--card); border:1px solid #DCD5BE; border-radius:6px; padding:16px 18px;}
+  .card h4{margin:0 0 8px 0; font-size:1rem; color:var(--accent);}
+  .diagram-wrap{background:var(--card); border:1px solid #DCD5BE; border-radius:8px; padding:26px 20px; margin:18px 0 26px 0; text-align:center;}
+  .diagram-caption{font-family:var(--hand); font-size:1.1rem; color:var(--ink-soft); margin-top:12px;}
+  .pill-row{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px;}
+  .pill{font-family:var(--mono); font-size:0.8rem; background:var(--accent-soft); color:var(--accent); padding:5px 12px; border-radius:16px;}
+  footer{margin-top:60px; padding-top:20px; border-top:1px dashed #CEC7B4; font-family:var(--mono); font-size:0.78rem; color:var(--ink-soft); display:flex; justify-content:space-between;}
+  @media (max-width:640px){.page{padding:36px 20px 70px 48px;} .page::before{left:28px;} .two-col{grid-template-columns:1fr;} h1{font-size:1.8rem;}}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="top">
+    <span class="unit-tag">DBMS · UNIT 2 · SECTION 2.4</span>
+    <h1>E-R Model, in depth</h1>
+    <p class="subtitle">attribute types, cardinality, participation, and strong vs. weak entities</p>
+  </header>
+
+  <section>
+    <h2><span class="no">§1</span> Quick recap</h2>
+    <p>The <strong>Entity-Relationship model</strong> is a semantic model built from three parts: <strong>entity sets</strong>, <strong>relationship sets</strong>, and <strong>attributes</strong>. An entity is a distinguishable real-world object (a person, a book); an entity set groups similar entities (all students, all teachers); a relationship is an association among entities.</p>
+  </section>
+
+  <section>
+    <h2><span class="no">§2</span> Types of attributes</h2>
+    <div class="two-col">
+      <div class="card">
+        <h4>Simple attribute</h4>
+        <p>An attribute that cannot be divided into smaller meaningful parts. Example: <em>Roll_no</em>, <em>Salary</em>, <em>City</em>.</p>
+      </div>
+      <div class="card">
+        <h4>Composite attribute</h4>
+        <p>An attribute made of multiple components that each contribute to the value. Example: <em>Name</em> = First_name + Last_name.</p>
+      </div>
+      <div class="card">
+        <h4>Single-valued attribute</h4>
+        <p>Each entity holds exactly one value for the attribute. Example: <em>Age</em> or <em>Student_id</em>.</p>
+      </div>
+      <div class="card">
+        <h4>Multivalued attribute</h4>
+        <p>One entity can have multiple values for the same attribute. Example: <em>Phone_no</em> or <em>Skills</em>.</p>
+      </div>
+    </div>
+    <div class="diagram-wrap">
+      <svg viewBox="0 0 620 340" width="100%" style="max-width:560px;" aria-label="Customer entity with attribute categories">
+        <rect x="70" y="70" width="480" height="200" rx="10" fill="#F6F1E6" stroke="#B0432E" stroke-width="2"/>
+        <text x="310" y="55" text-anchor="middle" font-family="Georgia, serif" font-size="28" fill="#6B4C93">Customer</text>
+        <text x="140" y="120" font-family="Georgia, serif" font-size="20" fill="#20262E">Cust_id</text>
+        <text x="140" y="155" font-family="Georgia, serif" font-size="20" fill="#20262E">Name</text>
+        <text x="140" y="190" font-family="Georgia, serif" font-size="20" fill="#20262E">Phone_no</text>
+        <text x="140" y="225" font-family="Georgia, serif" font-size="20" fill="#20262E">Date_of_birth</text>
+        <text x="140" y="260" font-family="Georgia, serif" font-size="20" fill="#20262E">Age</text>
+        <line x1="230" y1="120" x2="340" y2="120" stroke="#6B4C93" stroke-width="2"/>
+        <line x1="230" y1="155" x2="340" y2="155" stroke="#6B4C93" stroke-width="2"/>
+        <line x1="230" y1="190" x2="340" y2="190" stroke="#6B4C93" stroke-width="2"/>
+        <line x1="230" y1="225" x2="340" y2="225" stroke="#6B4C93" stroke-width="2"/>
+        <line x1="230" y1="260" x2="340" y2="260" stroke="#6B4C93" stroke-width="2"/>
+        <text x="360" y="120" font-family="Georgia, serif" font-size="18" fill="#1F6F5C">simple</text>
+        <text x="360" y="155" font-family="Georgia, serif" font-size="18" fill="#1F6F5C">composite</text>
+        <text x="360" y="190" font-family="Georgia, serif" font-size="18" fill="#1F6F5C">multivalued</text>
+        <text x="360" y="225" font-family="Georgia, serif" font-size="18" fill="#1F6F5C">stored</text>
+        <text x="360" y="260" font-family="Georgia, serif" font-size="18" fill="#1F6F5C">derived</text>
+      </svg>
+      <p class="diagram-caption">Customer: Name is composite, Phone_no is multivalued, Date_of_birth is stored, Age is derived, Cust_id is the key</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="no">§3</span> Constraints on an E-R schema</h2>
+    <p>An E-R schema may need to satisfy constraints that its contents must obey. There are two kinds:</p>
+
+    <h3>3.1 · Mapping cardinality</h3>
+    <p>Defines how many entities of one set relate to how many entities of another — used specifically for binary relationships.</p>
+    <table>
+      <tr><th>Cardinality</th><th>Meaning</th></tr>
+      <tr><td>One-to-one</td><td>One entity in A associates with exactly one entity in B</td></tr>
+      <tr><td>One-to-many</td><td>One entity in A associates with zero or more entities in B</td></tr>
+      <tr><td>Many-to-one</td><td>Several entities in A associate with exactly one entity in B</td></tr>
+      <tr><td>Many-to-many</td><td>Several entities in A associate with several entities in B</td></tr>
+    </table>
+    <div class="diagram-wrap">
+      <svg viewBox="0 0 520 200" width="100%" style="max-width:480px;" aria-label="One-to-many relationship diagram">
+        <rect x="35" y="60" width="120" height="70" rx="8" fill="#F6F1E6" stroke="#6B4C93" stroke-width="2"/>
+        <text x="95" y="101" text-anchor="middle" font-family="Georgia, serif" font-size="22" fill="#20262E">Loan</text>
+        <rect x="365" y="60" width="120" height="70" rx="8" fill="#F6F1E6" stroke="#6B4C93" stroke-width="2"/>
+        <text x="425" y="101" text-anchor="middle" font-family="Georgia, serif" font-size="22" fill="#20262E">Customer</text>
+        <line x1="155" y1="95" x2="365" y2="95" stroke="#6B4C93" stroke-width="3"/>
+        <text x="260" y="78" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#1F6F5C">borrower</text>
+        <text x="95" y="170" font-family="Georgia, serif" font-size="18" fill="#20262E">one</text>
+        <text x="425" y="170" font-family="Georgia, serif" font-size="18" fill="#20262E">many</text>
+      </svg>
+      <p class="diagram-caption">one-to-many: one loan is connected to only one customer via borrower, but one customer can have several loans</p>
+    </div>
+
+    <h3>3.2 · Participation constraints</h3>
+    <table>
+      <tr><th>Type</th><th>Meaning</th><th>Example</th></tr>
+      <tr><td>Total participation</td><td>Every entity in the set participates in at least one relationship of R</td><td>Every <em>loan</em> must appear in the <em>borrower</em> relationship</td></tr>
+      <tr><td>Partial participation</td><td>Only some entities in the set participate in R</td><td>Not every <em>customer</em> has taken a loan</td></tr>
+    </table>
+    <div class="diagram-wrap">
+      <svg viewBox="0 0 460 150" width="100%" style="max-width:420px;" aria-label="Participation constraints diagram">
+        <rect x="30" y="45" width="150" height="70" rx="8" fill="#F6F1E6" stroke="#6B4C93" stroke-width="2"/>
+        <text x="105" y="88" text-anchor="middle" font-family="Georgia, serif" font-size="22" fill="#20262E">Loan</text>
+        <rect x="280" y="45" width="150" height="70" rx="8" fill="#F6F1E6" stroke="#6B4C93" stroke-width="2"/>
+        <text x="355" y="88" text-anchor="middle" font-family="Georgia, serif" font-size="22" fill="#20262E">Customer</text>
+        <line x1="180" y1="80" x2="280" y2="80" stroke="#6B4C93" stroke-width="4"/>
+        <line x1="180" y1="80" x2="280" y2="80" stroke="#6B4C93" stroke-width="1" stroke-dasharray="8 6" opacity="0.7"/>
+      </svg>
+      <p class="diagram-caption">double line = total participation (every loan has a borrower); single line = partial (not every customer has borrowed)</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="no">§4</span> Strong vs. weak entities</h2>
+    <table>
+      <tr><th>Strong Entity Set</th><th>Weak Entity Set</th></tr>
+      <tr><td>Has its own primary key</td><td>Does not have enough attributes to form a primary key on its own</td></tr>
+      <tr><td>Can exist independently</td><td>Depends on an identifying relationship with a strong entity</td></tr>
+      <tr><td>Example: Student</td><td>Example: Dependent of an employee</td></tr>
+    </table>
+    <div class="callout">
+      <strong>Key idea:</strong> a weak entity set needs a discriminator to distinguish among its members within the same owner entity.
+    </div>
+    <div class="diagram-wrap">
+      <svg viewBox="0 0 560 220" width="100%" style="max-width:520px;" aria-label="Weak entity set illustration">
+        <rect x="55" y="80" width="150" height="75" rx="10" fill="#F6F1E6" stroke="#6B4C93" stroke-width="2"/>
+        <text x="130" y="123" text-anchor="middle" font-family="Georgia, serif" font-size="22" fill="#20262E">Employee</text>
+        <rect x="345" y="55" width="160" height="120" rx="10" fill="#F6F1E6" stroke="#B0432E" stroke-width="2"/>
+        <text x="425" y="92" text-anchor="middle" font-family="Georgia, serif" font-size="22" fill="#20262E">Dependent</text>
+        <text x="425" y="122" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#1F6F5C">dname</text>
+        <text x="425" y="150" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#1F6F5C">age</text>
+        <line x1="205" y1="117" x2="345" y2="117" stroke="#6B4C93" stroke-width="3"/>
+        <text x="275" y="102" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#1F6F5C">owns</text>
+      </svg>
+    </div>
+  </section>
+
+  <footer>
+    <span>DBMS · Unit 2</span>
+    <span>2.4 — E-R Model</span>
+  </footer>
+
+</div>
+</body>
+</html>

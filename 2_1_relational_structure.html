@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2.1 Relational Structure — DBMS Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600;7..72,700&family=Caveat:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F1F2EE; --paper-line:#D6D9CE;
+    --ink:#20262E; --ink-soft:#4B5560;
+    --margin:#B0432E;
+    --accent:#2A5C8A; --accent-soft:#DCE7F0;
+    --gold:#A9791F;
+    --card:#F9FAF7;
+    --serif:'Literata', Georgia, 'Times New Roman', serif;
+    --hand:'Caveat', cursive; --mono:'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:var(--serif); color:var(--ink);
+    background:repeating-linear-gradient(var(--paper) 0px, var(--paper) 35px, var(--paper-line) 36px, var(--paper) 37px);
+    line-height:1.65; -webkit-font-smoothing:antialiased;
+  }
+  .page{max-width:760px; margin:0 auto; padding:56px 48px 96px 76px; position:relative; min-height:100vh;}
+  .page::before{content:""; position:absolute; top:0; bottom:0; left:52px; width:2px; background:var(--margin); opacity:0.55;}
+  header.top{margin-bottom:44px;}
+  .unit-tag{display:inline-block; font-family:var(--mono); font-size:12px; letter-spacing:0.06em; color:var(--accent); background:var(--accent-soft); padding:4px 10px; border-radius:3px; margin-bottom:14px;}
+  h1{font-size:2.35rem; font-weight:700; margin:0 0 8px 0; line-height:1.15;}
+  .subtitle{font-family:var(--hand); font-size:1.4rem; color:var(--ink-soft); margin:0;}
+  h2{font-size:1.5rem; font-weight:600; color:var(--accent); margin:52px 0 6px 0; padding-bottom:8px; border-bottom:1px solid #C9CCC0; display:flex; align-items:baseline; gap:10px;}
+  h2 .no{font-family:var(--mono); font-size:0.85rem; color:var(--gold); font-weight:500;}
+  h3{font-size:1.12rem; font-weight:600; margin:26px 0 8px 0;}
+  p{margin:0 0 14px 0; font-size:1.02rem;}
+  ul, ol{margin:0 0 16px 0; padding-left:22px;}
+  li{margin-bottom:7px; font-size:1.02rem;}
+  .callout{background:var(--card); border-left:3px solid var(--accent); padding:14px 18px; border-radius:2px; margin:16px 0 22px 0; font-size:0.98rem; color:var(--ink-soft);}
+  .callout strong{color:var(--ink);}
+  .definition{background:var(--card); border:1px solid #DADCCF; border-radius:6px; padding:16px 20px; margin:14px 0 22px 0;}
+  .definition .label{font-family:var(--mono); font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold); margin-bottom:6px; display:block;}
+  table{width:100%; border-collapse:collapse; margin:14px 0 22px 0; font-size:0.95rem; background:var(--card);}
+  th, td{border:1px solid #DADCCF; padding:9px 12px; text-align:left;}
+  th{background:var(--accent-soft); color:var(--accent); font-weight:600; font-size:0.85rem;}
+  .pill-row{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px;}
+  .pill{font-family:var(--mono); font-size:0.8rem; background:var(--accent-soft); color:var(--accent); padding:5px 12px; border-radius:16px;}
+  .two-col{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:22px;}
+  .card{background:var(--card); border:1px solid #DADCCF; border-radius:6px; padding:16px 18px;}
+  .card h4{margin:0 0 8px 0; font-size:1rem; color:var(--accent);}
+  .diagram-wrap{background:var(--card); border:1px solid #DADCCF; border-radius:8px; padding:24px; margin:18px 0 26px 0; text-align:center;}
+  .diagram-caption{font-family:var(--hand); font-size:1.1rem; color:var(--ink-soft); margin-top:10px;}
+  footer{margin-top:60px; padding-top:20px; border-top:1px dashed #C9CCC0; font-family:var(--mono); font-size:0.78rem; color:var(--ink-soft); display:flex; justify-content:space-between;}
+  @media (max-width:640px){.page{padding:36px 20px 70px 48px;} .page::before{left:28px;} .two-col{grid-template-columns:1fr;} h1{font-size:1.8rem;}}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="top">
+    <span class="unit-tag">DBMS · UNIT 2 · SECTION 2.1</span>
+    <h1>Relational Structure</h1>
+    <p class="subtitle">tables, tuples, and the rules that keep a relation well-behaved</p>
+  </header>
+
+  <section>
+    <h2><span class="no">§1</span> What a relation is</h2>
+    <div class="definition">
+      <span class="label">Definition</span>
+      The <strong>relational model (RM)</strong> represents a database as a collection of <strong>relations</strong> — and a relation is nothing more than a table of values.
+    </div>
+    <p>Every row in the table is a collection of related data values representing one real-world entity or relationship. The table as a whole is a collection of such relationships — which is exactly why it's called a <em>relation</em>.</p>
+    <p>A <strong>tuple</strong> (row) holds all the data for a single instance of the table — say, a person named Deepak. Every tuple must carry a unique identification, or <strong>key</strong>, based on its data.</p>
+  </section>
+
+  <section>
+    <h2><span class="no">§2</span> Fields, records, and domains</h2>
+    <p>Fields and records are the two basic components of any database:</p>
+    <table>
+      <tr><th>Term</th><th>Also called</th><th>Meaning</th></tr>
+      <tr><td>Field</td><td>Attribute / column</td><td>A vertical category of data</td></tr>
+      <tr><td>Record</td><td>Row</td><td>A horizontal grouping of unique field data</td></tr>
+    </table>
+    <div class="definition">
+      <span class="label">Domain</span>
+      The set of permitted values for an attribute.
+    </div>
+    <p>Take an <code>account</code> relation with attributes <code>acc_no</code>, <code>br_name</code>, <code>balance</code>. The domain of <code>br_name</code> is the set of all valid branch names — e.g. Balives, Treasury, Market Yard, Rail Lines, Vijapur Road.</p>
+    <ul>
+      <li>Domain values must be <strong>atomic</strong></li>
+      <li>Two different attributes may share the same domain</li>
+      <li>A domain may include <strong>null</strong> — not zero, not an empty string, just "value unavailable"</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><span class="no">§3</span> Entities, as rows</h2>
+    <p>A relational-database entity represents a real object that's uniquely identifiable and carries the attributes relevant to the application — including its relationships to other entities. In the database, an entity is represented by an individual row in a table.</p>
+  </section>
+
+  <section>
+    <h2><span class="no">§4</span> Properties every relation must satisfy</h2>
+    <ol>
+      <li><strong>Atomic values</strong> — every value in the table is indivisible</li>
+      <li><strong>Same domain per column</strong> — all values in a column come from the same domain</li>
+      <li><strong>Column order doesn't matter</strong></li>
+      <li><strong>Row order doesn't matter</strong></li>
+      <li><strong>Unique column names</strong> — since columns are referred to by name</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="no">§5</span> RDBMS — putting the model into software</h2>
+    <div class="definition">
+      <span class="label">Definition</span>
+      <strong>RDBMS</strong> (Relational Database Management System) is a DBMS built on the relational model introduced by <strong>E. F. Codd</strong>. Data lives in database objects called <strong>tables</strong>.
+    </div>
+    <p>RDBMS is the foundation for SQL and for essentially every modern database system.</p>
+    <div class="callout">
+      /* Lines 121-122 omitted */
+    </div>
+    <h3>Widely used RDBMS software</h3>
+    <div class="pill-row">
+      /* Lines 125-129 omitted */
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="no">§6</span> Putting it together</h2>
+    <div class="diagram-wrap">
+      /* Lines 135-143 omitted */
+    </div>
+  </section>
+
+  <footer>
+    <span>DBMS · Unit 2</span>
+    <span>2.1 — Relational Structure</span>
+  </footer>
+
+</div>
+</body>
+</html>
