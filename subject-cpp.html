@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CPP – CODEHUB</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    .purple-badge { background: rgba(124,92,246,0.18); color: #7c5cf6; }
+    .green-badge  { background: rgba(0,200,150,0.18);  color: #00c896; }
+    .orange-badge { background: rgba(255,159,28,0.18); color: #ff9f1c; }
+    .purple-icon  { background: rgba(124,92,246,0.15); color: #7c5cf6; }
+    .green-icon   { background: rgba(0,200,150,0.15);  color: #00c896; }
+    .orange-icon  { background: rgba(255,159,28,0.15); color: #ff9f1c; }
+  </style>
+</head>
+<body data-theme="dark">
+
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <img src="assets/codehub-logo.png" alt="CodeHub" class="logo-img" />
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+        <li class="dropdown">
+          <a href="#" class="nav-link active"><i class="fas fa-book-open"></i> Subjects <i class="fas fa-chevron-down chevron"></i></a>
+          <div class="dropdown-menu">
+            <a href="subject-dms.html"><span class="dot purple"></span>DMS – Database Management System</a>
+            <a href="subject-cpp.html"><span class="dot green"></span>CPP – C++ Programming</a>
+            <a href="subject-dsu.html"><span class="dot orange"></span>DSU – Data Structures</a>
+          </div>
+        </li>
+        <li><a href="index.html#features" class="nav-link"><i class="fas fa-folder-open"></i> Materials</a></li>
+        <li><a href="about.html" class="nav-link"><i class="fas fa-info-circle"></i> About</a></li>
+      </ul>
+      <div class="nav-right">
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search subjects, units, topics..." id="searchInput" oninput="handleSearch(event)"/>
+          <div class="search-results" id="searchResults"></div>
+        </div>
+        <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-sun" id="themeIcon"></i></button>
+        <button class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="subject-page">
+    <div class="subject-hero">
+      <div class="subject-hero-inner">
+        <div class="subject-hero-icon green-icon" style="width:72px;height:72px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:2rem;">
+          <i class="fas fa-code"></i>
+        </div>
+        <div>
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+            <h1>CPP</h1>
+            <span class="sub-badge green-badge" style="padding:4px 14px;border-radius:20px;font-size:0.78rem;font-weight:600;">C++ Programming</span>
+          </div>
+          <p class="desc">Learn C++ concepts, OOP, file handling, arrays, pointers and more.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="subject-main">
+      <div class="materials-section">
+        <h2>
+          <i class="fas fa-folder-open" style="color:var(--green)"></i>
+          Study Materials
+          <span id="matCount" style="font-size:0.8rem;font-weight:500;color:var(--text-muted);margin-left:8px;">0 files</span>
+        </h2>
+        <div class="filter-row">
+          <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
+          <button class="filter-btn" onclick="setFilter('pdf',this)"><i class="fas fa-file-pdf"></i> PDF</button>
+          <button class="filter-btn" onclick="setFilter('cpp',this)"><i class="fas fa-file-code"></i> Code</button>
+          <button class="filter-btn" onclick="setFilter('doc',this)"><i class="fas fa-file-word"></i> Doc</button>
+          <button class="filter-btn" onclick="setFilter('ppt',this)"><i class="fas fa-file-powerpoint"></i> PPT</button>
+          <button class="filter-btn" onclick="setFilter('img',this)"><i class="fas fa-file-image"></i> Image</button>
+        </div>
+        <div class="materials-list" id="materialsList"></div>
+      </div>
+
+      <div class="upload-panel">
+        <h3><i class="fas fa-cloud-upload-alt" style="color:var(--accent)"></i> Add Materials</h3>
+        <div class="upload-drop-zone" id="dropZone">
+          <i class="fas fa-file-upload"></i>
+          <p>Drag & drop files here</p>
+          <span>PDF, C++ files, Word, PPT, Images…</span>
+        </div>
+        <input type="file" id="fileInput" multiple accept="*/*"/>
+        <button class="btn-upload" onclick="triggerUpload()">
+          <i class="fas fa-plus"></i> Browse & Add Files
+        </button>
+        <div class="upload-tip">
+          <i class="fas fa-info-circle"></i>
+          Files are saved locally in your browser. You can download them anytime.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <span>Made with <i class="fas fa-heart" style="color:#e05c5c"></i> for Students &nbsp;|&nbsp; <span class="gradient-text">CodeHub</span></span>
+    <span>Study &nbsp;•&nbsp; Learn &nbsp;•&nbsp; Grow</span>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>initSubjectPage('cpp');</script>
+</body>
+</html>

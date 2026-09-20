@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CODEHUB – Your Study Material, Organized.</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body data-theme="dark">
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <img src="assets/codehub-logo.png" alt="CodeHub" class="logo-img" />
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" class="nav-link active"><i class="fas fa-home"></i> Home</a></li>
+        <li class="dropdown">
+          <a href="#subjects" class="nav-link"><i class="fas fa-book-open"></i> Subjects <i class="fas fa-chevron-down chevron"></i></a>
+          <div class="dropdown-menu">
+            <a href="subject-dms.html"><span class="dot purple"></span>DMS – Database Management System</a>
+            <a href="subject-cpp.html"><span class="dot green"></span>CPP – C++ Programming</a>
+            <a href="subject-dsu.html"><span class="dot orange"></span>DSU – Data Structures</a>
+          </div>
+        </li>
+        <li><a href="#features" class="nav-link"><i class="fas fa-folder-open"></i> Materials</a></li>
+        <li><a href="about.html" class="nav-link"><i class="fas fa-info-circle"></i> About</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search subjects, units, topics..." id="searchInput" oninput="handleSearch(event)" />
+          <div class="search-results" id="searchResults"></div>
+        </div>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+          <i class="fas fa-sun" id="themeIcon"></i>
+        </button>
+        <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <div class="hero-left">
+        <div class="hero-logo-big">
+          <p class="hero-logo-label">CODEHUB</p>
+        </div>
+        <div class="hero-divider"></div>
+        <div class="hero-text">
+          <h1>Your Study Material,<br/><span class="gradient-text">Organized.</span></h1>
+          <p>Access your DMS, C++ and DSU notes, programs, PDFs and other study resources in one place.</p>
+          <a href="#subjects" class="btn-primary"><i class="fas fa-compass"></i> Explore Subjects →</a>
+        </div>
+      </div>
+      <div class="hero-right">
+        <img src="assets/hero-banner.jpg" alt="Study materials banner" class="hero-banner" />
+        <div class="hero-floating-card">
+          <i class="fas fa-laptop-code hero-icon"></i>
+        </div>
+      </div>
+    </div>
+    <div class="hero-glow"></div>
+  </section>
+
+  <!-- ===== SUBJECTS ===== -->
+  <section class="subjects-section" id="subjects">
+    <div class="section-container">
+      <div class="section-header">
+        <i class="fas fa-layer-group section-icon"></i>
+        <div>
+          <h2>Our Subjects</h2>
+          <p>Choose a subject to access your study materials.</p>
+        </div>
+      </div>
+
+      <div class="subjects-grid">
+        <!-- DMS -->
+        <div class="subject-card purple-card" onclick="location.href='subject-dms.html'">
+          <div class="card-header-row">
+            <div class="subject-icon purple-icon">
+              <i class="fas fa-project-diagram"></i>
+            </div>
+            <div>
+              <h3>DMS</h3>
+              <p class="sub-full-name">Database Management System</p>
+            </div>
+          </div>
+          <p class="card-desc">Explore sets, logic, relations, functions, combinatorics and more.</p>
+          <div class="card-footer">
+            <span class="material-count" id="dms-count"><i class="fas fa-file-alt"></i> 0 Materials</span>
+            <a href="subject-dms.html" class="btn-outline purple-btn">View Materials →</a>
+          </div>
+        </div>
+
+        <!-- CPP -->
+        <div class="subject-card green-card" onclick="location.href='subject-cpp.html'">
+          <div class="card-header-row">
+            <div class="subject-icon green-icon">
+              <i class="fas fa-code"></i>
+            </div>
+            <div>
+              <h3>CPP</h3>
+              <p class="sub-full-name">C++ Programming</p>
+            </div>
+          </div>
+          <p class="card-desc">Learn C++ concepts, OOP, file handling, arrays, pointers and more.</p>
+          <div class="card-footer">
+            <span class="material-count" id="cpp-count"><i class="fas fa-file-alt"></i> 0 Materials</span>
+            <a href="subject-cpp.html" class="btn-outline green-btn">View Materials →</a>
+          </div>
+        </div>
+
+        <!-- DSU -->
+        <div class="subject-card orange-card" onclick="location.href='subject-dsu.html'">
+          <div class="card-header-row">
+            <div class="subject-icon orange-icon">
+              <i class="fas fa-database"></i>
+            </div>
+            <div>
+              <h3>DSU</h3>
+              <p class="sub-full-name">Data Structures</p>
+            </div>
+          </div>
+          <p class="card-desc">Master arrays, linked lists, stacks, queues, trees, graphs and more.</p>
+          <div class="card-footer">
+            <span class="material-count" id="dsu-count"><i class="fas fa-file-alt"></i> 0 Materials</span>
+            <a href="subject-dsu.html" class="btn-outline orange-btn">View Materials →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FEATURES ===== -->
+  <section class="features-section" id="features">
+    <div class="features-grid">
+      <div class="feature-item">
+        <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+        <div>
+          <h4>Easy Access</h4>
+          <p>All your study materials in one place.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon"><i class="fas fa-search"></i></div>
+        <div>
+          <h4>Smart Search</h4>
+          <p>Find anything in seconds — subjects, units, topics or files.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon"><i class="fas fa-desktop"></i></div>
+        <div>
+          <h4>Responsive Design</h4>
+          <p>Learn anytime, anywhere on any device.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+        <div>
+          <h4>Simple & Clean</h4>
+          <p>Focus on what matters — your studies.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <span>Made with <i class="fas fa-heart" style="color:#e05c5c"></i> for Students &nbsp;|&nbsp; <span class="gradient-text">CodeHub</span></span>
+    <span>Study &nbsp;•&nbsp; Learn &nbsp;•&nbsp; Grow</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

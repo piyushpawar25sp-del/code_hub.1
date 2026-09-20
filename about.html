@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About – CODEHUB</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body data-theme="dark">
+
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <img src="assets/codehub-logo.png" alt="CodeHub" class="logo-img" />
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+        <li class="dropdown">
+          <a href="#" class="nav-link"><i class="fas fa-book-open"></i> Subjects <i class="fas fa-chevron-down chevron"></i></a>
+          <div class="dropdown-menu">
+            <a href="subject-dms.html"><span class="dot purple"></span>DMS – Database Management System</a>
+            <a href="subject-cpp.html"><span class="dot green"></span>CPP – C++ Programming</a>
+            <a href="subject-dsu.html"><span class="dot orange"></span>DSU – Data Structures</a>
+          </div>
+        </li>
+        <li><a href="index.html#features" class="nav-link"><i class="fas fa-folder-open"></i> Materials</a></li>
+        <li><a href="about.html" class="nav-link active"><i class="fas fa-info-circle"></i> About</a></li>
+      </ul>
+      <div class="nav-right">
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search subjects, units, topics..." id="searchInput" oninput="handleSearch(event)"/>
+          <div class="search-results" id="searchResults"></div>
+        </div>
+        <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-sun" id="themeIcon"></i></button>
+        <button class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="about-page">
+    <div class="about-inner">
+
+      <div style="display:flex;align-items:center;gap:20px;margin-bottom:32px;">
+        <svg viewBox="0 0 80 80" fill="none" style="width:80px;height:80px;">
+          <polygon points="40,6 72,24 72,56 40,74 8,56 8,24" stroke="#00e5ff" stroke-width="2" fill="none"/>
+          <polygon points="40,16 62,29 62,51 40,64 18,51 18,29" stroke="#00e5ff" stroke-width="1.2" fill="none" opacity="0.5"/>
+          <line x1="40" y1="6"  x2="18" y2="51" stroke="#00e5ff" stroke-width="1.2" opacity="0.6"/>
+          <line x1="40" y1="6"  x2="62" y2="51" stroke="#00e5ff" stroke-width="1.2" opacity="0.6"/>
+          <line x1="8"  y1="24" x2="62" y2="51" stroke="#00e5ff" stroke-width="1.2" opacity="0.6"/>
+          <line x1="72" y1="24" x2="18" y2="51" stroke="#00e5ff" stroke-width="1.2" opacity="0.6"/>
+          <circle cx="40" cy="40" r="7" fill="#00e5ff" opacity="0.9"/>
+        </svg>
+        <div>
+          <h1>About <span class="gradient-text">CODEHUB</span></h1>
+          <p style="margin:0;color:var(--text-muted);font-size:0.9rem;">Your personal study material organizer</p>
+        </div>
+      </div>
+
+      <p>
+        <strong>CODEHUB</strong> is a personal study portal designed to keep all your academic materials — PDFs,
+        C++ programs, notes, and more — organized and accessible for three core subjects:
+        <strong>DMS</strong> (Database Management System), <strong>CPP</strong> (C++ Programming),
+        and <strong>DSU</strong> (Data Structures & Utilities).
+      </p>
+      <p>
+        Upload your files to each subject, filter by type, and download them anytime — all stored locally
+        in your browser without needing any server or internet connection.
+      </p>
+
+      <div class="about-grid">
+        <div class="about-card">
+          <h3><i class="fas fa-project-diagram" style="color:#7c5cf6"></i> DMS</h3>
+          <p>Database Management System — relational databases, SQL, normalization, transactions, indexing and queries.</p>
+        </div>
+        <div class="about-card">
+          <h3><i class="fas fa-code" style="color:#00c896"></i> CPP</h3>
+          <p>C++ Programming — fundamentals, OOP, STL, file handling, templates, pointers, memory management.</p>
+        </div>
+        <div class="about-card">
+          <h3><i class="fas fa-database" style="color:#ff9f1c"></i> DSU</h3>
+          <p>Data Structures — arrays, stacks, queues, linked lists, trees, heaps, graphs and sorting algorithms.</p>
+        </div>
+        <div class="about-card">
+          <h3><i class="fas fa-cloud-upload-alt" style="color:var(--accent)"></i> Upload & Organize</h3>
+          <p>Drag & drop files into each subject. Your materials are saved in your browser and you can download anytime.</p>
+        </div>
+        <div class="about-card">
+          <h3><i class="fas fa-search" style="color:var(--accent)"></i> Smart Search</h3>
+          <p>Instantly search across subjects, topics and keywords to quickly navigate your study resources.</p>
+        </div>
+        <div class="about-card">
+          <h3><i class="fas fa-moon" style="color:var(--accent)"></i> Dark / Light Mode</h3>
+          <p>Toggle between dark and light themes to suit your study environment and reduce eye strain.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="footer">
+    <span>Made with <i class="fas fa-heart" style="color:#e05c5c"></i> for Students &nbsp;|&nbsp; <span class="gradient-text">CodeHub</span></span>
+    <span>Study &nbsp;•&nbsp; Learn &nbsp;•&nbsp; Grow</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
