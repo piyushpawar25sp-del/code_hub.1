@@ -1,0 +1,7 @@
+Please upload the actual image files you sent into this folder with these exact filenames:
+
+- logo.png         (navbar logo, ~36x36)
+- logo-hero.png    (hero logo, ~120x120)
+- hero-banner.jpg  (hero banner image, recommended ~1280x480)
+
+You can upload them here in chat, or place them into this `assets/` folder in your workspace.
